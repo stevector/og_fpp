@@ -67,7 +67,6 @@ before_script:
   - drush runserver 127.0.0.1:8080 &
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
 
-
 script:
   # Run code sniffer.
   #- phpcs --report=full --ignore=behat-tests/vendor --standard=Drupal $TRAVIS_BUILD_DIR/drupal/modules/$MODULE_NAME
