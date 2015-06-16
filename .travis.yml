@@ -69,7 +69,6 @@ before_script:
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
 
 script:
-  - cd $TRAVIS_BUILD_DIR/drupal/sites/all/modules/contrib/og_fpp/og_fpp_example/tests && ./vendor/bin/behat -f pretty
   drush status
   drush pml
   # Run the tests
