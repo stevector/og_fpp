@@ -77,5 +77,3 @@ Feature: OGFPP
     Then print current URL
 
    # Then I break
-
-
