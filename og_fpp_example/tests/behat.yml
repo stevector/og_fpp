@@ -11,7 +11,7 @@ default:
     Behat\MinkExtension:
       goutte: ~
       selenium2: ~
-      base_url: http://ogfppvlad.local
+      base_url: http://127.0.0.1:8080
     Drupal\DrupalExtension:
       blackbox: ~
       api_driver: 'drush'
