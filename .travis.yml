@@ -47,7 +47,7 @@ install:
   - mkdir /tmp/$MODULE_NAME
   - mv * /tmp/$MODULE_NAME/
   - git clone --branch $DRUPAL_VERSION $DRUPAL_REPO drupal --depth 1
-  - mv /tmp/$MODULE_NAME drupal/modules/
+  - mv /tmp/$MODULE_NAME drupal/sites/all/modules/contrib
 
 before_script:
   # This fixes a fail when install Drupal.
@@ -59,7 +59,7 @@ before_script:
   # Install Drupal and enable the required modules (including this one).
   - mysql -e 'create database drupal;'
   - cd $TRAVIS_BUILD_DIR/drupal && drush --yes site-install --db-url="mysql://root@127.0.0.1/drupal"
-  - cd $TRAVIS_BUILD_DIR/drupal/modules/og_fpp/og_fpp_example/tests && composer install --prefer-source --no-interaction
+  - cd $TRAVIS_BUILD_DIR/drupal/sites/all/modules/contrib/og_fpp/og_fpp_example/tests && composer install --prefer-source --no-interaction
   - cd $TRAVIS_BUILD_DIR/drupal && drush --yes en $MODULE_NAME
   
 
@@ -70,8 +70,9 @@ before_script:
 script:
   # Run code sniffer.
   #- phpcs --report=full --ignore=behat-tests/vendor --standard=Drupal $TRAVIS_BUILD_DIR/drupal/modules/$MODULE_NAME
-  # - cd $TRAVIS_BUILD_DIR/drupal/modules/og_fpp/og_fpp_example/behat-tests && ./vendor/bin/behat -f pretty
+  - cd $TRAVIS_BUILD_DIR/drupal/sites/all/modules/contrib/og_fpp/og_fpp_example/tests && ./vendor/bin/behat -f pretty
   drush status
+  drush pml
   # Run the tests
   # - php $TRAVIS_BUILD_DIR/drupal/core/scripts/run-tests.sh --verbose --color --php `which php` --url http://127.0.0.1:8080 "$MODULE_TEST_GROUP" | tee /tmp/test.txt; TEST_EXIT=${PIPESTATUS[0]}; echo $TEST_EXIT
   # Check if we had fails in the run-tests.sh script
