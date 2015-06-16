@@ -70,3 +70,4 @@ before_script:
 
 script:
   - cd $TRAVIS_BUILD_DIR/drupal/sites/all/modules/contrib/og_fpp/og_fpp_example/tests && ./vendor/bin/behat -f pretty;
+  
