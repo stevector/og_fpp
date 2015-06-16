@@ -47,6 +47,7 @@ install:
   - mkdir /tmp/$MODULE_NAME
   - mv * /tmp/$MODULE_NAME/
   - git clone --branch $DRUPAL_VERSION $DRUPAL_REPO drupal --depth 1
+  - mkdir drupal/sites/all/modules/contrib
   - mv /tmp/$MODULE_NAME drupal/sites/all/modules/contrib
 
 before_script:
