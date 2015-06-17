@@ -61,7 +61,7 @@ before_script:
   - mysql -e 'create database drupal;'
   - cd $TRAVIS_BUILD_DIR/drupal && drush --yes site-install --db-url="mysql://root@127.0.0.1/drupal"
   - cd $TRAVIS_BUILD_DIR/drupal/sites/all/modules/contrib/og_fpp/og_fpp_example/tests && composer install --prefer-source --no-interaction
-  - cd $TRAVIS_BUILD_DIR/drupal && drush --yes en $MODULE_NAME
+  - cd $TRAVIS_BUILD_DIR/drupal && drush --yes en og_fpp_example
   
 
   # Start a web server.
