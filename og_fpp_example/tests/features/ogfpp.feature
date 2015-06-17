@@ -11,6 +11,7 @@ Feature: OGFPP
 
     # Add English Group
     When I visit "/node/add/group"
+      Then print last response
       And I fill in the following:
         | Title               | English Department |
          When I press the "Save" button
