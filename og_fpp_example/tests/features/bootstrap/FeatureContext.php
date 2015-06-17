@@ -22,7 +22,51 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
     {
     }
 
+  /**
+   * @Then I load the available panes
+   */
+  public function iLoadTheAvailablePanes()
+  {
+    $current_url = $this->getSession()->getCurrentUrl();
+    $exploded_url = explode('/', $current_url);
+    print_r($exploded_url);
+    $nids = array_filter($exploded_url, 'is_numeric');
+    $nid = array_pop($nids);
+    $path = 'panels/ajax/editor/select-content/panelizer%3Anode%3A' . $nid . '%3Apage_manager/middle/fpp';
 
 
+    $this->getSession()->visit($this->locatePath($path));
+  }
 
+  /**
+   * @Then the available panes output contain :output
+   */
+  public function theAvailablePanesOutputContain($output)
+  {
+    if (strpos((string) $this->getSession()->getPage()->getContent(), $this->fixStepArgument($output)) === FALSE) {
+      throw new \Exception(sprintf("The last output did not contain '%s'.\nInstead, it was:\n\n%s'", $output, $this->getSession()->getPage()->getContent()));
+    }
+  }
+
+  /**
+   * @Then the available panes output does not contain :output
+   */
+  public function theAvailablePanesOutputDoesNotContain($output)
+  {
+    if (strpos((string) $this->getSession()->getPage()->getContent(), $this->fixStepArgument($output)) !== FALSE) {
+      throw new \Exception(sprintf("The last output contained '%s'.\nInstead, it was:\n\n%s'", $output, $this->getSession()->getPage()->getContent()));
+    }
+  }
+
+  /**
+   * Returns fixed step argument (with \\" replaced back to ").
+   *
+   * @param string $argument
+   *
+   * @return string
+   */
+  protected function fixStepArgument($argument)
+  {
+    return str_replace('\\"', '"', $argument);
+  }
 }

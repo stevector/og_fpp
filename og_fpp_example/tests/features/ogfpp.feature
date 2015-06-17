@@ -11,9 +11,9 @@ Feature: OGFPP
 
     # Add English Group
     When I visit "/node/add/group"
-    Then print last response
-    Then I run drush pml
-    Then print last drush output
+    #Then print last response
+    #Then I run drush pml
+    #Then print last drush output
       And I fill in the following:
         | Title               | English Department |
          When I press the "Save" button
@@ -69,14 +69,18 @@ Feature: OGFPP
  #   Then I break
     Then I press the "Save" button
 
+
     # Go To English Panelizer
     When I visit "/admin/content"
     And I click "English Dept Landing Page"
     Then print current URL
     And I click "Panelizer"
-    Then print current URL
+    #Then print current URL
     And I click "content" in the "Full page override" row
 
     Then print current URL
+    Then I load the available panes
+    Then the available panes output contain "English Department Sidebar Blurb"
+    Then the available panes output does not contain "Chemistry Department Sidebar Blurb"
 
-   # Then I break
+    #Then I break
