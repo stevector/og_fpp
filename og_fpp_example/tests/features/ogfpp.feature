@@ -6,81 +6,78 @@ Feature: OGFPP
 
   Scenario: Putting Fieldable Panels Panes in groups
     Given I am logged in as a user with the "administrator" role
-
-
-
     # Add English Group
     When I visit "/node/add/group"
-    #Then print last response
-    #Then I run drush pml
-    #Then print last drush output
-      And I fill in the following:
-        | Title               | English Department |
-         When I press the "Save" button
-         Then I should see "English Department"
+    And I fill in the following:
+    | Title               | English Department |
+    When I press the "Save" button
+    Then I should see "English Department"
 
-    # Add Chemistry Group
+    # Add Chemistry Group.
     When I visit "/node/add/group"
-      And I fill in the following:
-      | Title               | Chemistry Department |
-       When I press the "Save" button
-       Then I should see "Chemistry Department"
+    And I fill in the following:
+    | Title               | Chemistry Department |
+    When I press the "Save" button
+    Then I should see "Chemistry Department"
 
-   # Add English Landing Page
+    # Add English Landing Page.
     When I visit "/node/add/page"
     # Then print last response
     And I fill in the following:
-      | Title               | English Dept Landing Page |
-      And select "English Department" from "og_group_ref[und][0][default][]"
-      When I press the "Save" button
-      Then I should see "English Department"
-      Then I should see "English Dept Landing Page"
+    | Title               | English Dept Landing Page |
+    And select "English Department" from "og_group_ref[und][0][default][]"
+    When I press the "Save" button
+    Then I should see "English Department"
+    Then I should see "English Dept Landing Page"
 
-    # Add Chemistry Landing Page
+    # Add Chemistry Landing Page.
     When I visit "/node/add/page"
-    # Then print last response
     And I fill in the following:
-      | Title               | Chemistry Dept Landing Page |
-      And select "Chemistry Department" from "og_group_ref[und][0][default][]"
-      When I press the "Save" button
-        Then I should see "Chemistry Department"
-        Then I should see "Chemistry Dept Landing Page"
+    | Title               | Chemistry Dept Landing Page |
+    And select "Chemistry Department" from "og_group_ref[und][0][default][]"
+    When I press the "Save" button
+    Then I should see "Chemistry Department"
+    Then I should see "Chemistry Dept Landing Page"
     Then print current URL
 
-    # Add English Sidebar blurb
+    # Add English Sidebar blurb.
     When I visit "admin/structure/fieldable-panels-panes/manage/fieldable-panels-pane/add"
-    # Then print last response
     And I fill in the following:
-      | Title                | English Department Sidebar Blurb |
-      | Administrative title | English Department Sidebar Blurb |
-      | Category             | FPP                              |
-
+    | Title                | English Department Sidebar Blurb |
+    | Administrative title | English Department Sidebar Blurb |
+    | Category             | FPP                              |
     And select "English Department" from "og_group_ref[und][0][default][]"
     Then I press the "Save" button
 
-    # Add Chemistry Sidebar blurb
+    # Add Chemistry Sidebar blurb.
     When I visit "admin/structure/fieldable-panels-panes/manage/fieldable-panels-pane/add"
     # Then print last response
     And I fill in the following:
-      | Title                | Chemistry Department Sidebar Blurb |
-      | Administrative title | Chemistry Department Sidebar Blurb |
-      | Category             | FPP                                |
+    | Title                | Chemistry Department Sidebar Blurb |
+    | Administrative title | Chemistry Department Sidebar Blurb |
+    | Category             | FPP                                |
     And select "Chemistry Department" from "og_group_ref[und][0][default][]"
- #   Then I break
     Then I press the "Save" button
 
-
-    # Go To English Panelizer
+    # Go To English Panelizer.
     When I visit "/admin/content"
     And I click "English Dept Landing Page"
     Then print current URL
     And I click "Panelizer"
     #Then print current URL
     And I click "content" in the "Full page override" row
-
-    Then print current URL
     Then I load the available panes
+    # This whole test is a build up to these two assertions.
     Then the available panes output contain "English Department Sidebar Blurb"
     Then the available panes output does not contain "Chemistry Department Sidebar Blurb"
 
-    #Then I break
+    # Delete the Fieldable Panels Panes.
+    # Nodes are automatically deleted at the end of tests.
+    # Fieldable Panel Panes aren't.
+    # @todo figure out how node clean works and add that to FPP.
+    When I visit "admin/structure/fieldable-panels-panes/fieldable_panels_pane/list"
+    And I click "delete"
+    And I press the "Delete" button
+    When I visit "admin/structure/fieldable-panels-panes/fieldable_panels_pane/list"
+    And I click "delete"
+    And I press the "Delete" button
