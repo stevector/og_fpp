@@ -24,22 +24,26 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
 
   /**
    * @Then I load the available panes
+   *
+   * This method exists to test the loading of panes which would normally require
+   * javascript. Instead of slowing down the overall test by relying on js
+   * this method directly constructs the URL that AJAX would retrieve.
    */
   public function iLoadTheAvailablePanes()
   {
     $current_url = $this->getSession()->getCurrentUrl();
     $exploded_url = explode('/', $current_url);
-    print_r($exploded_url);
     $nids = array_filter($exploded_url, 'is_numeric');
     $nid = array_pop($nids);
     $path = 'panels/ajax/editor/select-content/panelizer%3Anode%3A' . $nid . '%3Apage_manager/middle/fpp';
-
-
     $this->getSession()->visit($this->locatePath($path));
   }
 
   /**
    * @Then the available panes output contain :output
+   *
+   * This method exists because iLoadTheAvailablePanes does not get a normal
+   * HTML document. Other text finding methods would fail.
    */
   public function theAvailablePanesOutputContain($output)
   {
